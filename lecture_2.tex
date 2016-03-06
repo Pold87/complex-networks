@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\title{Complex Networks}
+\date{\today}
+\author{Volker}
+
+\begin{document}
+\maketitle
+
+\section{Lecture 1}
+
+\section{Lecture 2}
+\label{sec:lecture2}
+
+\begin{itemize}
+\item $a_{ij}$ is an element from the adjacency matrix $A$
+\item we are looking for all node pairs that are within a cluster
+\item the higher $m$, the more modular the network is
+\item $X$ is an eigenvector matrix
+\item The smallest eigenvalue of the Laplacian is always 0
+\item The number of zeros in the eigenvalues of $Q$ tells you how your
+  network is connected; if the second eigenvalue is also 0, there are
+  two separate parts of the graph
+\item If the variance of the degree sequence is large, the eigenvalues
+  are also larger
+\item if you add more link, the eigenvalue also tend to be larger (or
+  stay the same)
+\item In a regular graph (where each node has the same degree $d$),
+  the largest eigenvalue is just the degree
+\item $\beta$ the rate of infection (infection can mean anything;
+  e.g. the likelihood of purchase)
+\item dynamic reaches a stable state; interesting to see how many
+  infections there are in a stable state
+\item the epidemic threshold can be approximated by the largest
+  eigenvalue
+\item $\lambda$ is largest eigenvalue
+\item $x$ is principal eigenvector. The principal eigenvector states
+  how often a website would be visited in a random walk sceanrio (see
+  PageRank)
+\item $H_{ij}$: distance from $i$ to $j$ (hop count matrix)
+\end{itemize}
+\subsection{Network Model - Why do we want to have one?}
+
+Reasons:
+\begin{enumerate}
+\item Find out which properties lead to this state
+\item To simplify the real world and just study the properties of interest
+\end{enumerate}
+
+\begin{align}
+E[L] = E[\sum_{j>i}a_{ij}] = \sum_{j>i}E[a_{ij}]
+\end{align}
+
+Choosing a random node, what is the probability that its degree equals
+$k$ in a Erd\"os-Renyi graph?
+
+\begin{align}
+Pr[D=k] = {N - 1 \choose k}p^k(1-p)^{N-1-k}
+\end{align}
+
+${N - 1 \choose k}$ is the number of possibilities to choose $k$
+neighbors.
+
+\begin{align}
+E[D] = (N - 1)p
+\end{align}
+
+Another equation (TODO: look it up):
+
+\begin{align}
+  (1 - p)^{N-1-k} =\\
+  e^{\log (1-p)^N-1-k}
+\end{align}
+
+\subsection{Wigner's semicircle}
+
+\begin{itemize}
+\item histogram or pdf of eigenvalues
+\item the largest eigenvaluie creates the small peaks 
+\end{itemize}
+
+\subsection{Other stuff}
+\begin{itemize}
+\item Average clustering coefficient should be large for small-world
+  network
+\item Given $N, L$ we can construct a Erd\"os-Renyi random graph
+  (algorithm: iteratively distribute the links between the nodes)
+\item difference between $C_{actual}$ and $C_{random}$: real networks
+  actually have the small world property, therefore, their number is
+  larger
+\item regular graph: each node is connected to $k$ nearest nodes
+\item scale-free means that there is no typical value (e.g. power-law
+  networks)
+\item $\sum_jd_j(t)$ is the total degree of a graph
+\end{itemize}
+
+\end{document}
