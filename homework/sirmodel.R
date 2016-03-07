@@ -3,7 +3,7 @@ set.seed(42)
 ### Initialize a SIR model using
 ### - a graph
 ### - a list of initial infections 
-### - a infection probability beta
+### - an infection probability beta
 ### returns: the constructed SIR model
 
 init_sirmodel <- function(graph, initial_infections, beta) {

@@ -11,6 +11,13 @@
 
 \begin{document}
 \maketitle
+
+I'm a guest student from the Radboud University. My TU Delft student
+number is 4524187, my official start date at the TU Delft is March
+2016, however, I have not received my login details yet. Therefore,
+I've used my employee account (I'm also doing an internship here) for
+this assignment.
+
 \subsection*{1)}
 $G$ is the network described in \texttt{7.txt}.
 
@@ -28,8 +35,35 @@ $G$ is the network described in \texttt{7.txt}.
   \caption{Degree distribution of Graph $G$}
 \end{figure}
 
-\subsection*{2)}
+The degree distribution approximately follows a power law
+distribution; however, the degrees 1 and 2 are underrepresented --
+therefore, a lognormal distribution might be better suited. The
+fitting curve for the power law distribution, with $\gamma = - 1.53$
+is shown in Figure~\ref{fig:fitted-curve}.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{fitted_curve}
+  \caption{Fitting curve for graph $G$, with power exponent
+    $\gamma = - 1.53$.}
+  \label{fig:fitted-curve}
+\end{figure}
+
+\subsection*{2)}
+The scale-free property strongly correlates with the network's
+robustness to failure. It turns out that the major hubs are closely
+followed by smaller ones. These smaller hubs, in turn, are followed by
+other nodes with an even smaller degree and so on. This hierarchy
+allows for a fault tolerant behavior. If failures occur at random and
+the vast majority of nodes are those with small degree, the likelihood
+that a hub would be affected is almost negligible. Even if a
+hub-failure occurs, the network will generally not lose its
+connectedness, due to the remaining hubs. On the other hand, if we
+choose a few major hubs and take them out of the network, the network
+is turned into a set of rather isolated graphs. Thus, hubs are both a
+strength and a weakness of scale-free networks. These properties have
+been studied analytically using percolation theory by Cohen et
+al.[9][10] and by Callaway et al.[11]
 \begin{itemize}
 \item Degree correlation (assortativity) $\rho_D$: $-0.30$
 \end{itemize}
@@ -87,22 +121,27 @@ Now, we consider the network $G_N$, described in \texttt{NetScience.txt}.
 \subsection*{8)}
 
 I am discussing the metrics in the sense of ``which network may allow
-information to propagte to a larger fraction of the network''.
+information to propagte to a larger fraction of the network'' an not,
+for example, ``which network is better suited in case of attacks'' or
+``which network might prevent the spread of a virus''.
 \vspace*{0.5em}
 
 \noindent\emph{Clustering coefficient $C$}. The clustering coefficient $C$
-states how densely the neighbors of a node are connected, that is, are
-my friends also friends with eeach other. Here, $G_N$ performs much
-better ($C(G) = 0.17 < C(G_N) = 0.80$), and is therefore better
-suited, since information can reach me on several channels, and makes
-the network more robust.
+states how densely the neighbors of a node are connected. The physical
+meaning in a communication network is, are my partners also connected
+to each other. Here, $G_N$ performs much better
+($C(G) = 0.17 < C(G_N) = 0.80$), and is therefore better suited, since
+information can be sent on several channels. This makes the network
+more robust in case of failures (e.g. node/link removal).
 
 \vspace*{0.5em}
-\noindent\emph{Average degree E[H]}. The average degree states the amount of
-neighbors of a node in a graph, in a communication network, to how
-many entities a message could be directly sent. Since both networks
-$G$ and $G_N$ have the same average degree, none of them performs
-better here.
+\noindent\emph{Average hopcount E[H]}. The average hopcount states the expected
+length of the shortest path between two nodes. The physical meaning in
+a communication network, this can be interpreted as the delay of the
+network. The smaller the average hopcount, the smaller the delay, and
+the faster messages can be sent between two partners. Since the
+average hopcount of $H$ is $3.75$, messages can be send much faster
+than in $G_N$ with a $E[H] = 6.04$.
 
 \vspace*{0.5em}
 \noindent\emph{Diameter $H_{max}$}. The diameter of the communication network
@@ -127,8 +166,9 @@ connected component. Since $G$ has the higher connectivtity, it
 performs better ($\mu_{N-1}(G) = 0.40 > \mu_{N-1}(G_N) = 0.015$).
 
 \vspace*{0.5em}
-\noindent All in all, I would recommend design $G$, and is better suited to
-convey information across the network.
+\noindent All in all, I would recommend design $G$, and is better
+suited to convey information across the network. However, for a real
+network, 
 
 \subsection*{9)}
 
@@ -160,11 +200,37 @@ Average of the metrics over the 100 ER random networks:
 \subsection*{11)}
 
 
-Now, we have a feeling of which network is better suited for
-information propagation.  However, there are still limitations: for
-example the speed of information propagation. We know, how many nodes
-are infected in the $E[n_{R_\infty}]$ state, but not how fast that
-occured.
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lr}
+    \toprule
+  Network    & $E[n_{R_\infty}]$ \\
+    \midrule
+    $G$      &                   \\
+    $G_N$    &                   \\
+    100 $ER$ &                   \\
+\bottomrule
+  \end{tabular}
+  \caption{Average number ($E[n_{R_\infty}]$) of resistant nodes in
+    the steady state for the different network models.}
+\end{table}
+
+% Comparison of E_inf
+
+
+% My observation
+
+
+% Possible reasons for my observation
+
+
+% 
+A final conclusion which network facilitates information propagation
+better is still difficult.  We have a feeling of which network is
+better suited for information propagation.  However, there are still
+limitations: for example the speed of information propagation. We
+know, how many nodes are infected in the $E[n_{R_\infty}]$ state, but
+not how fast that occured.
 
 \begin{table}[H]
   \centering

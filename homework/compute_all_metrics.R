@@ -1,5 +1,5 @@
-# Compute all desired metrics for a given graph and, optionally write
-# to LaTeX or plot the degree distribution
+# Compute all desired metrics for a given graph and, optionally,
+# generate LaTeX output or plot the degree distribution
 compute_all_metrics <- function(graph, latex=F, plot=F) {
 
 # Number of nodes
