@@ -8,7 +8,8 @@ require(plyr)
 source("compute_all_metrics.R")
 source("metrics2latex.R")
 source("ers_degree_distribution.R")
-source("sirmodel.R") 
+source("sirmodel.R")
+source("power_law_fit.R") 
 
 set.seed(42) # Set random seed for reproducability
 
@@ -19,27 +20,11 @@ g <- read.graph("7.txt", format="ncol", directed=FALSE)
 gn <- read.graph("NetScience.txt", format="ncol", directed=FALSE)
 
 ### Compute metrics for G and G_N
-g_metrics <- compute_all_metrics(g, latex=T)
-gn_metrics <- compute_all_metrics(gn, latex=T)
+g_metrics <- compute_all_metrics(g, latex=T, plot=F)
+gn_metrics <- compute_all_metrics(gn, latex=T, plot=F)
 
-### Find out power exponent gamma and plot fitting curve
-pfit <- power.law.fit(degree(g), implementation="R.mle")
-h <- table(degree(g))
-hn <- h / sum(table(degree(g)))
-k = 1:max(degree(g))
-y = k ^ (- pfit@coef)
-y <- y / sum(y)
-
-pdf("fitted_curve_normalized.pdf")
-plot(k, y, pch=2, col=2, type="b", xlim=c(1, 34), xlab="Degree k", ylab="Pr[D=k]")
-lines(hn, pch=1, col=1, type="b",  ylim=0:1, xlim=c(1, 34))
-legend(15, 1.00,
-       c("degree distribution of graph G", "fitting curve (power law distribution)"),
-       pch=1:2,
-       col=1:2,
-       lty=1)
-dev.off()
-
+### Find out power exponent gamma and, optionally plot fitting curve
+gamma <- power_law_fit(degree(g), plot=F)
 
 ### Generate 100 Erdos-Renyi (ER) graphs with the same number N of nodes
 ### and the same link density p as the network G
@@ -53,33 +38,58 @@ metrics2latex(er_means)
 ### Create SIR model
 ## An SIR model consists of
 ## - a graph
-## - a set of infected states
-## - a set of susceptible states
-## - a set of recovered states
-initial_infections <- sample(1:vcount(g), 20, replace=F)
-beta = 0.3 # infection probability
+## - a set of infected nodes
+## - a set of susceptible nodes
+## - a set of resistant nodes
 
-sir_model.g <- init_sirmodel(g, initial_infections, beta)
-sir_model.gn <- init_sirmodel(gn, initial_infections, beta)
-sir_model.er <- init_sirmodel(gn, initial_infections, beta)
+R = 1 # Repetitions
+T = 100  # Time steps
 
+g.resistants <- NULL
+gn.resistants <- NULL
+er.resistants <- NULL
 
-T = 2  # Time steps
-for (t in 1:T) {
-    # Update model for G
-    sir_model.g <- update_sirmodel(sir_model.g, beta)
+for (r in 1:R) {
 
-    # Update model for G_N
-    #sir_model.gn <- update_sirmodel(sir_model.gn, beta)
+    initial_infections <- sample(1:vcount(g), 20, replace=F)
+    beta = 0.3 # infection probability
+    
+    sir_model.g <- init_sirmodel(g, initial_infections, beta)
+    sir_model.gn <- init_sirmodel(gn, initial_infections, beta)
+    sir_model.er <- init_sirmodel(sample_gnp(g_metrics["N"], g_metrics["p"]),
+                                  initial_infections, beta)
 
-    # Create new ER graph and update ER model
-    #er <- sample_gnp(g_metrics["N"], g_metrics["p"])
-    #sir_model.er$graph <- er
-    #sir_model.er <- update_sirmodel(sir_model.er, beta)
+    for (t in 1:T) {
+        ## Update model for G
+        sir_model.g <- update_sirmodel(sir_model.g, beta)
+        ## Update model for G_N
+        sir_model.gn <- update_sirmodel(sir_model.gn, beta)
+        ## Create new ER graph and update ER model
+        sir_model.er$graph <- sample_gnp(g_metrics["N"], g_metrics["p"])
+        sir_model.er <- update_sirmodel(sir_model.er, beta)
+    }
+
+    ## Store number of resistants
+    g.resistants <- c(g.resistants, tail(sir_model.g$num_resistant, 1))
+    gn.resistants <- c(gn.resistants, tail(sir_model.gn$num_resistant, 1))
+    er.resistants <- c(er.resistants, tail(sir_model.er$num_resistant, 1))
+
 }
 
+cat(sprintf("Graph G E[n_R_inf] = %f\n", mean(g.resistants)))
+cat(sprintf("Graph G_N E[n_R_inf] = %f\n", mean(gn.resistants)))
+cat(sprintf("Graph ER E[n_R_inf] = %f\n", mean(er.resistants)))
+
 ## # Plot models
+## pdf("G_SIR.pdf")
 ## plot_sirmodel(sir_model.g, T)
+## dev.off()
+
+## pdf("GN_SIR.pdf")
 ## plot_sirmodel(sir_model.gn, T)
+## dev.off()
+
+## pdf("ER_SIR.pdf")
 ## plot_sirmodel(sir_model.er, T)
+## dev.off()
 

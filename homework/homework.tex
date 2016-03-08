@@ -14,9 +14,9 @@
 
 I'm a guest student from the Radboud University. My TU Delft student
 number is 4524187, my official start date at the TU Delft is March
-2016, however, I have not received my login details yet. Therefore,
-I've used my employee account (I'm also doing an internship here) for
-this assignment.
+2016, however, I have not received my login credentials
+yet. Therefore, I've used my employee account (I'm also doing an
+internship here) for this assignment.
 
 \subsection*{1)}
 $G$ is the network described in \texttt{7.txt}.
@@ -28,54 +28,44 @@ $G$ is the network described in \texttt{7.txt}.
   \item Average degree $E[D]$: $4.82$
   \item Degree variance $Var[D]$: $15.46$
 \end{itemize}
-
+The degree distribution of $G$ is shown in
+Figure~\ref{fig:degree-distribution}.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{degree_distribution}
+  \includegraphics[width=0.7\textwidth]{degree_distribution_1}
   \caption{Degree distribution of Graph $G$}
+  \label{fig:degree-distribution}
 \end{figure}
 
-The degree distribution approximately follows a power law
-distribution; however, the degrees 1 and 2 are underrepresented --
-therefore, a lognormal distribution might be better suited. The
-fitting curve for the power law distribution, with $\gamma = - 1.53$
-is shown in Figure~\ref{fig:fitted-curve}.
+The power law distribution has been fit using a linear regression,
+with the logarithm of the degree as the predictor and the logarithm of
+the probability as target value.
+
+As can be seen in Figure~\ref{fig:fitted-curve}, the degree
+distribution roughly follows a power law distribution; however,
+especially degree 1 is far off the fit power law curve. The obtained
+values are: $\gamma = - 1.55$ and $c = 0.61$.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{fitted_curve}
-  \caption{Fitting curve for graph $G$, with power exponent
-    $\gamma = - 1.53$.}
+  \includegraphics[width=0.7\textwidth]{fitted_curve_normalized}
+  \caption{Fitting curve for graph $G$, with power exponent $\gamma =
+    - 1.55$ and $c = 0.61$.}
   \label{fig:fitted-curve}
 \end{figure}
 
 \subsection*{2)}
-The scale-free property strongly correlates with the network's
-robustness to failure. It turns out that the major hubs are closely
-followed by smaller ones. These smaller hubs, in turn, are followed by
-other nodes with an even smaller degree and so on. This hierarchy
-allows for a fault tolerant behavior. If failures occur at random and
-the vast majority of nodes are those with small degree, the likelihood
-that a hub would be affected is almost negligible. Even if a
-hub-failure occurs, the network will generally not lose its
-connectedness, due to the remaining hubs. On the other hand, if we
-choose a few major hubs and take them out of the network, the network
-is turned into a set of rather isolated graphs. Thus, hubs are both a
-strength and a weakness of scale-free networks. These properties have
-been studied analytically using percolation theory by Cohen et
-al.[9][10] and by Callaway et al.[11]
+
 \begin{itemize}
 \item Degree correlation (assortativity) $\rho_D$: $-0.30$
 \end{itemize}
-\textbf{Physical meaning}:\\
-Assortativity $\sim$ \emph{Birds of a feather flock together.}\\
-Disassortativity $\sim$ \emph{Opposites attract.}
-
-\vspace*{0.5em}
-\noindent Networks, in which nodes with a high degree are likely
-connected to other high-degree nodes are \emph{assortative}; networks
+Networks, in which nodes with a high degree are likely connected to
+other high-degree nodes and nodes with a low degree are are likely
+connected to other low-degree nodes are \emph{assortative} and have a
+positive $\rho_D$ (\emph{Birds of a feather flock together}). Networks
 in which nodes with a low degree are likely connected to high-degree
-nodes are \emph{disassortative}.
+nodes are \emph{disassortative} and have a negative $\rho_D$
+(\emph{Opposites attract.}).
 
 \subsection*{3)}
 
@@ -120,55 +110,60 @@ Now, we consider the network $G_N$, described in \texttt{NetScience.txt}.
 
 \subsection*{8)}
 
-I am discussing the metrics in the sense of ``which network may allow
-information to propagte to a larger fraction of the network'' an not,
-for example, ``which network is better suited in case of attacks'' or
-``which network might prevent the spread of a virus''.
-\vspace*{0.5em}
-
 \noindent\emph{Clustering coefficient $C$}. The clustering coefficient $C$
-states how densely the neighbors of a node are connected. The physical
-meaning in a communication network is, are my partners also connected
-to each other. Here, $G_N$ performs much better
-($C(G) = 0.17 < C(G_N) = 0.80$), and is therefore better suited, since
-information can be sent on several channels. This makes the network
-more robust in case of failures (e.g. node/link removal).
+states how densely the neighbors of an agent are connected with each
+other. Here, $G_N$ has a much higher coefficient $C$ ($C(G) = 0.17 <
+C(G_N) = 0.80$), which is typical for a real-world network. Clustering
+can form some robustness against attacks (since information can be
+passed among the neighbors of an agent on several channels) but can
+also mean that information is primarily spread within a certain clique
+without too much contact to agents outside of the clique. Therefore,
+no design has a clear advantage here.
 
 \vspace*{0.5em}
-\noindent\emph{Average hopcount E[H]}. The average hopcount states the expected
-length of the shortest path between two nodes. The physical meaning in
-a communication network, this can be interpreted as the delay of the
-network. The smaller the average hopcount, the smaller the delay, and
-the faster messages can be sent between two partners. Since the
-average hopcount of $H$ is $3.75$, messages can be send much faster
-than in $G_N$ with a $E[H] = 6.04$.
+\noindent
+\emph{Average hopcount E[H]}. The average hopcount states the expected
+length of the shortest path between two nodes. This can be interpreted
+as the delay of the communication network. The smaller the average
+hopcount, the smaller the delay, and the faster messages can be sent
+between two partners. Since the average hopcount of $G$ is $3.75$,
+messages can be sent much faster than in $G_N$ with $E[H] = 6.04$.
 
 \vspace*{0.5em}
 \noindent\emph{Diameter $H_{max}$}. The diameter of the communication network
-states how many edges a message needs to pass between two nodes in the
-worst case. Since a smaller $H_{max}$ means faster communication in
-the worst case, $G$ performs better ($H_{max}(G) = 7 < H_{max}(G_N) =
-17$).
+states how many edges a message needs to pass between the sender and
+the receiver in the worst case. Since a smaller $H_{max}$ means faster
+communication in the worst case, $G$ performs better ($H_{max}(G) = 7
+< H_{max}(G_N) = 17$).
 
 \vspace*{0.5em}
-\noindent\emph{Spectral radius $\lambda_1$}. The spectral radius is important
-for dynamic processes in networks, for example, if, and how fast, a
-message might go ``viral'' but also how fast a virus might affect the
-network. The larger $lambda_1$, the lower the epidemic threshold
-$\tau_c$. Regarding security, a higher $lambda_1$ is better,
-therefore, $G$ performs better ($\lambda_1(G) = 7.44 < \lambda_1(G_N)
-= 10.38$).
+\noindent\emph{Spectral radius $\lambda_1$}.
+The spectral radius is important for dynamic processes in networks,
+for example, if, and when, a message might go ``viral'', and receive
+as many participants as possible. The larger $\lambda_1$, the lower
+the epidemic threshold $\tau_c$. Therefore, for fast widespread
+information propagation, a higher $\lambda_1$ can be beneficial,
+therefore, $G_N$ performs better ($\lambda_1(G) = 7.44 <
+\lambda_1(G_N) = 10.38$).
 
 \vspace*{0.5em}
-\noindent\emph{Algebraic connectivity $\mu_{N-1}$}. This metric states how well connected a graph is
-and, if the value is greater than zero, that the graph consits of one
-connected component. Since $G$ has the higher connectivtity, it
-performs better ($\mu_{N-1}(G) = 0.40 > \mu_{N-1}(G_N) = 0.015$).
+\noindent%
+\emph{Algebraic connectivity $\mu_{N-1}$}. This metric states how well
+connected a graph is: the larger $\mu_{N-1}$, the more difficult it is
+to disconnect or split apart the communcation network -- therefore a
+high $\mu_{N-1}$ shows more robustness in case of failures or
+breakdown of links. If the value is greater than zero, the graph is a
+connected graph -- this is important in a communication framework to
+analyze if a certain message can reach each participant. Since $G$ has
+the higher connectivtity, it performs better ($\mu_{N-1}(G) = 0.40 >
+\mu_{N-1}(G_N) = 0.015$).
 
 \vspace*{0.5em}
-\noindent All in all, I would recommend design $G$, and is better
-suited to convey information across the network. However, for a real
-network, 
+\noindent All in all, I would recommend design $G$. It offers a
+shorter average and maximum delay for messages, which is better suited
+to quickly convey information across the network.  Additionally, it
+shows a higher algebraic connectivity and is, therefore, potentially
+more robust in case of failures. 
 
 \subsection*{9)}
 
@@ -186,15 +181,15 @@ Average of the metrics over the 100 ER random networks:
 \begin{itemize}
  \item Number of nodes $N$: 379
  \item Number of links $L$: 914.33
- \item Link density $p$: 0.012764
- \item Average degree $E[D]$: 4.824960
- \item Degree variance $Var[D]$: 4.774007
- \item Clustering coefficient: 0.012574
- \item Assortativity: -0.003513
- \item Average hopcount $E[H]$: 3.928829
- \item Spectral radius $\lambda_1$: 6.006430
- \item Algebraic connectivity $\mu_{N-1}$: 0.025853
- \item Diameter $H_{max}$: 7.980000
+ \item Link density $p$: 0.013
+ \item Average degree $E[D]$: 4.82
+ \item Degree variance $Var[D]$: 4.77
+ \item Clustering coefficient: 0.013
+ \item Assortativity: -0.0035
+ \item Average hopcount $E[H]$: 3.93
+ \item Spectral radius $\lambda_1$: 6.01
+ \item Algebraic connectivity $\mu_{N-1}$: 0.026
+ \item Diameter $H_{max}$: 7.98
 \end{itemize}
 
 \subsection*{11)}
@@ -204,52 +199,68 @@ Average of the metrics over the 100 ER random networks:
   \centering
   \begin{tabular}{lr}
     \toprule
-  Network    & $E[n_{R_\infty}]$ \\
+    Network    & $E[n_{R_\infty}]$ \\
     \midrule
-    $G$      &                   \\
-    $G_N$    &                   \\
-    100 $ER$ &                   \\
-\bottomrule
+    $G$      & 233.25            \\
+    $G_N$    & 171.43            \\
+    100 $ER$ & 226.07            \\
+    \bottomrule
   \end{tabular}
-  \caption{Average number ($E[n_{R_\infty}]$) of resistant nodes in
-    the steady state for the different network models.}
+  \caption{Average number of resistant nodes in
+    the steady state $E[n_{R_\infty}]$ for the different network models.}
+  \label{tab:steady}
 \end{table}
 
-% Comparison of E_inf
+Table~\ref{tab:steady} shows the average number of resistant nodes
+$E[n_{R_\infty}]$ of 100 repetitions of the SIR process, each with 100
+iterations. The average number of resistant nodes in the steady state
+is similar for $G$ and 100 $ER$. $E[n_{R_\infty}](G_N)$ is lower, with
+around 171 expected resistant nodes.
 
-
-% My observation
-
-
-% Possible reasons for my observation
-
-
-% 
-A final conclusion which network facilitates information propagation
-better is still difficult.  We have a feeling of which network is
-better suited for information propagation.  However, there are still
-limitations: for example the speed of information propagation. We
-know, how many nodes are infected in the $E[n_{R_\infty}]$ state, but
-not how fast that occured.
+Since the 100 ER graphs have been generated using the same number of
+nodes $N$ and the same link density $p$ as $G$, a similar
+$E[n_{R_\infty}](G_N)$ can be expected. The larger average hopcount
+$E[H]$ of $G_N$ might hinder the spread of information leading to a
+lower $E[n_{R_\infty}]$. Additionally, the high clustering coefficient
+of $G_N$ might lead to information getting stuck in a clique: if the
+nodes with contact to other agents outside of the cluster are
+resistant but did no spread the information, the information spread
+can more easily die out. The algebraic connectivtity of $\mu_{N-1} =
+0.015$ of $G_N$ supports this view: due to its low value, the graph
+can easily be split apart by ``blocking'' (resistant) nodes that did
+not infect their neighbors.
+ 
+So far, it looks like $G$ is generally better suited for information
+propagation than the other two network models. It has a lower average
+and maximum delay, reaches more nodes in the SIR model, and might be
+more robust to failure due to its higher $\mu_{N-1}$.  However, a
+final conclusion which network model is better might still be
+premature. First, we should check if the higher $\lambda_1$ of network
+$G_N$ indeed leads to a lower epidemic threshold in the SIR model and
+check how many agents can be reached in one timestep (and not only in
+the steady state). Additionally, we have not yet considered the
+consequences of different types of failures and targeted attacks on
+the network models.
 
 \begin{table}[H]
   \centering
   \begin{tabular}{r|rrr}
     \toprule
-Metric      & $G$   & $G_N$ & 100 ER \\
-\midrule
-$N$         & 379   & 379   & 379    \\
-$L$         & 914   & 914   & 914.33 \\
-$p$         & 0.013 & 0.013 & 0.013  \\
-$E[D]$      & 4.82  & 4.82  & 4.82   \\
-$Var[D]$    & 15.46 & 15.46 & 4.77   \\
-$C$         & 0.17  & 0.80  & 0.01  \\
-$\rho_D$    & -0.30 & -0.08 & 0.00   \\
-$E[H]$      & 3.75  & 6.04  & 3.93   \\
-$\lambda_1$ & 7.44  & 10.38 & 6.01   \\
-$\mu_{N-1}$ & 0.40  & 0.015 & 0.026  \\
-$H_{max}$   & 7     & 17    & 7.98   \\
-\bottomrule
+    Metric            & $G$    & $G_N$  & 100 ER \\
+    \midrule
+    $N$               & 379    & 379    & 379    \\
+    $L$               & 914    & 914    & 914.33 \\
+    $p$               & 0.013  & 0.013  & 0.013  \\
+    $E[D]$            & 4.82   & 4.82   & 4.82   \\
+    $Var[D]$          & 15.46  & 15.46  & 4.77   \\
+    $C$               & 0.17   & 0.80   & 0.01   \\
+    $\rho_D$          & -0.30  & -0.08  & 0.00   \\
+    $E[H]$            & 3.75   & 6.04   & 3.93   \\
+    $\lambda_1$       & 7.44   & 10.38  & 6.01   \\
+    $\mu_{N-1}$       & 0.40   & 0.015  & 0.026  \\
+    $H_{max}$         & 7      & 17     & 7.98   \\
+    $E[n_{R_\infty}]$ & 233.25 & 171.43 & 226.07 \\
+    \bottomrule
   \end{tabular}
   \caption{Comparison of all metrics}
 \end{table}

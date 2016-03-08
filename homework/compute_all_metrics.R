@@ -56,9 +56,10 @@ if (latex) {
 
 if (plot) {
   # Plot
-  pdf(file="degree_distribution.pdf")
-  plot(degree_distribution(graph),
-       xlab="Degree k", ylab="Pr[D=k]",
+    dd <- degree_distribution(graph)
+  pdf(file="degree_distribution_1.pdf")
+  plot(1:(length(dd)-1), dd[2:length(dd)],
+      xlab="Degree k", ylab="Pr[D=k]",
       pch=1, col=1, type="b")
   dev.off()
 }

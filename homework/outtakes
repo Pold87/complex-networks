@@ -1,0 +1,35 @@
+
+    k = 1:max(degree(g))
+    y = k ^ (- pfit@coef)
+    y <- y / sum(y)
+
+    pfit <- power.law.fit(degree(g), implementation="R.mle")
+
+    pdf("fitted_curve_normalized.pdf")
+    plot(k, y, pch=2, col=2, type="b", xlim=c(1, 34), xlab="Degree k", ylab="Pr[D=k]")
+    lines(hn, pch=1, col=1, type="b",  ylim=0:1, xlim=c(1, 34))
+    legend(15, 1.00,
+           c("degree distribution of graph G", "fitting curve (power law distribution)"),
+           pch=1:2,
+           col=1:2,
+           lty=1)
+    dev.off()
+
+    return(pfit)
+
+
+
+The scale-free property strongly correlates with the network's
+robustness to failure. It turns out that the major hubs are closely
+followed by smaller ones. These smaller hubs, in turn, are followed by
+other nodes with an even smaller degree and so on. This hierarchy
+allows for a fault tolerant behavior. If failures occur at random and
+the vast majority of nodes are those with small degree, the likelihood
+that a hub would be affected is almost negligible. Even if a
+hub-failure occurs, the network will generally not lose its
+connectedness, due to the remaining hubs. On the other hand, if we
+choose a few major hubs and take them out of the network, the network
+is turned into a set of rather isolated graphs. Thus, hubs are both a
+strength and a weakness of scale-free networks. These properties have
+been studied analytically using percolation theory by Cohen et
+al.[9][10] and by Callaway et al.[11]
