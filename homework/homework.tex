@@ -32,7 +32,7 @@ The degree distribution of $G$ is shown in
 Figure~\ref{fig:degree-distribution}.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{degree_distribution_1}
+  \includegraphics[width=0.75\textwidth]{degree_distribution_1}
   \caption{Degree distribution of Graph $G$}
   \label{fig:degree-distribution}
 \end{figure}
@@ -48,7 +48,7 @@ values are: $\gamma = - 1.55$ and $c = 0.61$.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.7\textwidth]{fitted_curve_normalized}
+  \includegraphics[width=0.75\textwidth]{fitted_curve_normalized}
   \caption{Fitting curve for graph $G$, with power exponent $\gamma =
     - 1.55$ and $c = 0.61$.}
   \label{fig:fitted-curve}
@@ -150,26 +150,28 @@ therefore, $G_N$ performs better ($\lambda_1(G) = 7.44 <
 \noindent%
 \emph{Algebraic connectivity $\mu_{N-1}$}. This metric states how well
 connected a graph is: the larger $\mu_{N-1}$, the more difficult it is
-to disconnect or split apart the communcation network -- therefore a
+to disconnect or split apart the communication network -- therefore a
 high $\mu_{N-1}$ shows more robustness in case of failures or
 breakdown of links. If the value is greater than zero, the graph is a
 connected graph -- this is important in a communication framework to
 analyze if a certain message can reach each participant. Since $G$ has
-the higher connectivtity, it performs better ($\mu_{N-1}(G) = 0.40 >
+the higher connectivity, it performs better ($\mu_{N-1}(G) = 0.40 >
 \mu_{N-1}(G_N) = 0.015$).
 
 \vspace*{0.5em}
 \noindent All in all, I would recommend design $G$. It offers a
 shorter average and maximum delay for messages, which is better suited
-to quickly convey information across the network.  Additionally, it
+to quickly conveying information across the network.  Additionally, it
 shows a higher algebraic connectivity and is, therefore, potentially
-more robust in case of failures. 
+more robust in case of failures. However, fast widespread information
+propagation might be better in $G_N$, therefore, the choice of the
+model depends on the final application.
 
 \subsection*{9)}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.9\textwidth]{er_degree_distribution}
+  \includegraphics[width=0.7\textwidth]{er_degree_distribution}
   \caption{Comparison of the degree distribution of 100 ER instances
     and the theoretical degree distribution, where $Pr[D=k] =
     \binom{N-1}{k}p^k(1-p)^{N-1-k}=\binom{378}{k}0.013^k\cdot0.987^{378-k}$.}
@@ -225,7 +227,7 @@ lower $E[n_{R_\infty}]$. Additionally, the high clustering coefficient
 of $G_N$ might lead to information getting stuck in a clique: if the
 nodes with contact to other agents outside of the cluster are
 resistant but did no spread the information, the information spread
-can more easily die out. The algebraic connectivtity of $\mu_{N-1} =
+can more easily die out. The algebraic connectivity of $\mu_{N-1} =
 0.015$ of $G_N$ supports this view: due to its low value, the graph
 can easily be split apart by ``blocking'' (resistant) nodes that did
 not infect their neighbors.
@@ -237,7 +239,7 @@ more robust to failure due to its higher $\mu_{N-1}$.  However, a
 final conclusion which network model is better might still be
 premature. First, we should check if the higher $\lambda_1$ of network
 $G_N$ indeed leads to a lower epidemic threshold in the SIR model and
-check how many agents can be reached in one timestep (and not only in
+check how many agents can be reached in one time step (and not only in
 the steady state). Additionally, we have not yet considered the
 consequences of different types of failures and targeted attacks on
 the network models.

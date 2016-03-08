@@ -42,9 +42,10 @@ metrics2latex(er_means)
 ## - a set of susceptible nodes
 ## - a set of resistant nodes
 
-R = 1 # Repetitions
+R = 100 # Repetitions
 T = 100  # Time steps
 
+# Initialize counts (one per repetition) for resistant state
 g.resistants <- NULL
 gn.resistants <- NULL
 er.resistants <- NULL
@@ -80,16 +81,5 @@ cat(sprintf("Graph G E[n_R_inf] = %f\n", mean(g.resistants)))
 cat(sprintf("Graph G_N E[n_R_inf] = %f\n", mean(gn.resistants)))
 cat(sprintf("Graph ER E[n_R_inf] = %f\n", mean(er.resistants)))
 
-## # Plot models
-## pdf("G_SIR.pdf")
+### Plot model
 ## plot_sirmodel(sir_model.g, T)
-## dev.off()
-
-## pdf("GN_SIR.pdf")
-## plot_sirmodel(sir_model.gn, T)
-## dev.off()
-
-## pdf("ER_SIR.pdf")
-## plot_sirmodel(sir_model.er, T)
-## dev.off()
-

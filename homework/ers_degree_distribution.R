@@ -1,5 +1,6 @@
-# Calculate (and optionally plot) the degree distribution for multiple
-# graphs
+### Volker Strobel
+### Calculate (and optionally plot) the degree distribution for multiple
+### graphs
 ers_degree_distribution <- function(graphs, plot=F) {
 
 # Apply function 'degree' to every graph

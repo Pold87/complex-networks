@@ -1,4 +1,5 @@
-# Output metrics values for LaTeX
+### Volker Strobel
+### Output metrics values for LaTeX
 metrics2latex <- function(metrics) {
 
    cat("\\begin{itemize}\n")

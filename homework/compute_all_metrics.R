@@ -1,5 +1,6 @@
-# Compute all desired metrics for a given graph and, optionally,
-# generate LaTeX output or plot the degree distribution
+### Volker Strobel
+## Compute all desired metrics for a given graph and, optionally,
+## generate LaTeX output or plot the degree distribution
 compute_all_metrics <- function(graph, latex=F, plot=F) {
 
 # Number of nodes
@@ -49,13 +50,13 @@ metrics <- c(N=N, L=L, p=p,
              mu_second=mu_second,
              diameter=diam)
 
-
+# Format output for LaTex
 if (latex) {
     metrics2latex(metrics)
 }
 
+### Plot degree distribution
 if (plot) {
-  # Plot
     dd <- degree_distribution(graph)
   pdf(file="degree_distribution_1.pdf")
   plot(1:(length(dd)-1), dd[2:length(dd)],

@@ -1,4 +1,5 @@
-# Fit power law distribution to data and return power exponent gamma
+### Volker Strobel
+### Fit power law distribution to data and return power exponent gamma
 power_law_fit<- function(d, plot=F) {
 
     h <- table(d) # Get count of each degree
@@ -6,7 +7,7 @@ power_law_fit<- function(d, plot=F) {
     k = 1:max(degrees) # Create degree vector
     probs <- unname(h / sum(table(degree(g)))) # Extract degree distribution
 
-    myfit <- lm(log(probs) ~ log(degrees)) # Fit linear model (on log-log) 
+    myfit <- lm(log(probs) ~ log(degrees)) # Fit linear model (with log-log transformation) 
     preds <- -myfit$coefficients[[1]] * k ** myfit$coefficients[[2]] # Make predictions
 
     ### Display coefficients
@@ -26,7 +27,7 @@ power_law_fit<- function(d, plot=F) {
         dev.off()
     }
 
-    ### Power exponent gamma
+    ### Return power exponent gamma
     gamma <- myfit$coefficients[[2]]
     return(gamma)
 

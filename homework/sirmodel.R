@@ -1,3 +1,5 @@
+### Volker Strobel
+
 set.seed(42)
 
 ### Initialize a SIR model using
